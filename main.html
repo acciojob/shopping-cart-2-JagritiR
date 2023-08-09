@@ -1,16 +1,62 @@
 <!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
-
 <head>
-      <link rel="stylesheet" href="styles.css">
+    <title>Shopping Cart 2</title>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+    <input type="text" id="item-name-input" placeholder="Item name">
+    <input type="number" id="item-price-input" placeholder="Item price">
+    <button onclick="addItem()">Add</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Item Price</th>
+            </tr>
+        </thead>
+        <tbody id="item-list">
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td data-ns-test="grandTotal">0</td>
+            </tr>
+        </tfoot>
+    </table>
 
+    <script>
+        let grandTotal = 0;
+
+        function addItem() {
+            let itemNameInput = document.getElementById("item-name-input");
+            let itemPriceInput = document.getElementById("item-price-input");
+            let itemList = document.getElementById("item-list");
+            let grandTotalElement = document.querySelector("[data-ns-test='grandTotal']");
+
+            let itemName = itemNameInput.value;
+            let itemPrice = parseFloat(itemPriceInput.value);
+
+            if (itemName && !isNaN(itemPrice)) {
+                let row = document.createElement("tr");
+                let nameCell = document.createElement("td");
+                nameCell.setAttribute("data-ns-test", "item-name");
+                nameCell.textContent = itemName;
+                let priceCell = document.createElement("td");
+                priceCell.setAttribute("data-ns-test", "item-price");
+                priceCell.textContent = itemPrice;
+                row.appendChild(nameCell);
+                row.appendChild(priceCell);
+                itemList.appendChild(row);
+
+                grandTotal += itemPrice;
+                grandTotalElement.textContent = grandTotal;
+
+                itemNameInput.value = "";
+                itemPriceInput.value = "";
+            }
+        }
+    </script>
 </body>
-
 </html>
